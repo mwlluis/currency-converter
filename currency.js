@@ -30,7 +30,7 @@ async function getData() {
   }
 }
 
-console.log(Currencies);
+// console.log(Currencies);
 
 getData();
 
@@ -41,23 +41,31 @@ function setEntry(array) {
     if (array[i] === "AUD") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${Currencies.AUD}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.AUD}</span>`;
       exchangeBoard.appendChild(newLi);
     } else if (array[i] === "CAD") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${Currencies.CAD}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.CAD}</span>`;
       exchangeBoard.appendChild(newLi);
     } else if (array[i] === "EUR") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${Currencies.EUR}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.EUR}</span>`;
       exchangeBoard.appendChild(newLi);
     } else if (array[i] === "GBP") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${Currencies.GBP}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.GBP}</span>`;
       exchangeBoard.appendChild(newLi);
     }
   }
 }
+
+//setting up the currency conversion
+
+const conversionBtn = document.getElementById("conversionBtn");
+conversionBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  console.log("clicked");
+});
