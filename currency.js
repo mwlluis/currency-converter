@@ -30,7 +30,7 @@ async function getData() {
   }
 }
 
-// console.log(Currencies);
+console.log(Currencies);
 
 getData();
 
@@ -73,34 +73,37 @@ conversionBtn.addEventListener("click", function (event) {
 
   let dollarValue = document.getElementById("dollarValue").value;
   let resultsList = document.getElementById("resultsList");
+  let objCurrToArr = Object.values(Currencies);
+  let objCurrToArrMapped = objCurrToArr.map((x) => x * dollarValue);
 
   console.log(dollarValue);
 
-  function setResults(array) {
-    for (i = 0; i < array.length; i++) {
-      if (array[i] === "AUD") {
+  function setResults(array1, array2) {
+    for (i = 0; i < array1.length; i++) {
+      if (array1[i] === "AUD") {
         const newConLi = document.createElement("li");
         // newLi.setAttribute("id", array[i]);
-        newConLi.innerHTML = `<span>${array[i]}: ${Currencies.AUD} </span>`;
+        newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]} </span>`;
         resultsList.appendChild(newConLi);
-      } else if (array[i] === "CAD") {
+      } else if (array1[i] === "CAD") {
         const newConLi = document.createElement("li");
         // newLi.setAttribute("id", array[i]);
-        newConLi.innerHTML = `<span>${array[i]}: ${Currencies.CAD}</span>`;
+        newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
-      } else if (array[i] === "EUR") {
+      } else if (array1[i] === "EUR") {
         const newConLi = document.createElement("li");
         // newLi.setAttribute("id", array[i]);
-        newConLi.innerHTML = `<span>${array[i]}: ${Currencies.EUR}</span>`;
+        newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
-      } else if (array[i] === "GBP") {
+      } else if (array1[i] === "GBP") {
         const newConLi = document.createElement("li");
         // newLi.setAttribute("id", array[i]);
-        newConLi.innerHTML = `<span>${array[i]}: ${Currencies.GBP}</span>`;
+        newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       }
     }
   }
 
-  setResults(countries);
+  setResults(countries, objCurrToArrMapped);
+  document.getElementById("dollarValue").value = "";
 });
