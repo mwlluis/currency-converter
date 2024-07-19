@@ -4,7 +4,7 @@ const url = `https://open.er-api.com/v6/latest/USD`;
 const Currencies = {};
 
 //i'm only interested in these currencies for now
-let countries = ["AUD", "CAD", "EUR", "GBP"];
+let countries = ["ARS", "AUD", "BRL", "CAD", "EUR", "GBP"];
 
 //this selects the element where the currencies will be displayed
 let exchangeBoard = document.getElementById("exchangeBoard");
@@ -21,13 +21,17 @@ async function getData() {
     //returns data as a json object
     const currencies = await response.json();
 
+    Currencies.ARS = currencies.rates.ARS;
     Currencies.AUD = currencies.rates.AUD;
+    Currencies.BRL = currencies.rates.BRL;
     Currencies.CAD = currencies.rates.CAD;
     Currencies.EUR = currencies.rates.EUR;
     Currencies.GBP = currencies.rates.GBP;
     // Currencies.lastUpdate = currencies.time_last_update_unix;
     // Currencies.nextUpdate = currencies.time_next_update_unix;
 
+    console.log(currencies);
+    console.log(Currencies);
     setEntry(countries);
   } catch (error) {
     console.error(error.message);
@@ -42,10 +46,31 @@ getData();
 
 function setEntry(array) {
   for (i = 0; i < array.length; i++) {
-    if (array[i] === "AUD") {
+    if (array[i] === "ARS") {
+      const newLi = document.createElement("li");
+      newLi.setAttribute("id", array[i]);
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.ARS.toFixed(
+        2
+      )}</span>`;
+      exchangeBoard.appendChild(newLi);
+    } else if (array[i] === "AUD") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
       newLi.innerHTML = `<span>${array[i]}: ${Currencies.AUD.toFixed(
+        2
+      )}</span>`;
+      exchangeBoard.appendChild(newLi);
+    } else if (array[i] === "BRL") {
+      const newLi = document.createElement("li");
+      newLi.setAttribute("id", array[i]);
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.BRL.toFixed(
+        2
+      )}</span>`;
+      exchangeBoard.appendChild(newLi);
+    } else if (array[i] === "BZL") {
+      const newLi = document.createElement("li");
+      newLi.setAttribute("id", array[i]);
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.BZL.toFixed(
         2
       )}</span>`;
       exchangeBoard.appendChild(newLi);
@@ -101,10 +126,20 @@ conversionBtn.addEventListener("click", function (event) {
 
   function setResults(array1, array2) {
     for (i = 0; i < array1.length; i++) {
-      if (array1[i] === "AUD") {
+      if (array1[i] === "ARS") {
         const newConLi = document.createElement("li");
         // newLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]} </span>`;
+        resultsList.appendChild(newConLi);
+      } else if (array1[i] === "AUD") {
+        const newConLi = document.createElement("li");
+        // newLi.setAttribute("id", array[i]);
+        newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
+        resultsList.appendChild(newConLi);
+      } else if (array1[i] === "BRL") {
+        const newConLi = document.createElement("li");
+        // newLi.setAttribute("id", array[i]);
+        newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       } else if (array1[i] === "CAD") {
         const newConLi = document.createElement("li");
