@@ -2,7 +2,11 @@
 const url = `https://open.er-api.com/v6/latest/USD`;
 //create an object that you can add exchange rates to, once the data is fetched
 const Currencies = {};
+
+//i'm only interested in these currencies for now
 let countries = ["AUD", "CAD", "EUR", "GBP"];
+
+//this selects the element where the currencies will be displayed
 let exchangeBoard = document.getElementById("exchangeBoard");
 
 //fetch json data
@@ -14,8 +18,8 @@ async function getData() {
       throw new Error(`Response status: ${response.status}`);
     }
 
+    //returns data as a json object
     const currencies = await response.json();
-    console.log(currencies);
 
     Currencies.AUD = currencies.rates.AUD;
     Currencies.CAD = currencies.rates.CAD;
@@ -30,11 +34,11 @@ async function getData() {
   }
 }
 
-console.log(Currencies);
+// console.log(Currencies);
 
 getData();
 
-//constructing the currency board
+//constructing the currency board, this doesn't run duplicates because it's not an event-driven action
 
 function setEntry(array) {
   for (i = 0; i < array.length; i++) {
@@ -63,20 +67,26 @@ function setEntry(array) {
 }
 
 //setting up the currency conversion
-
+//selecting the button to convert currency
 const conversionBtn = document.getElementById("conversionBtn");
 
+//adding on click event listener
 conversionBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
   console.log("clicked");
 
+  //this captures the user provided amount in dollars to be converted
   let dollarValue = document.getElementById("dollarValue").value;
+  //this selects the ul that will display the converted currency amounts
   let resultsList = document.getElementById("resultsList");
+  //need to clear out the previously psoted conversions
   let objCurrToArr = Object.values(Currencies);
   let objCurrToArrMapped = objCurrToArr.map((x) => x * dollarValue);
 
-  console.log(dollarValue);
+  // console.log(dollarValue);
+  //this clears the previous conversions so no duplication
+  resultsList.innerHTML = "";
 
   function setResults(array1, array2) {
     for (i = 0; i < array1.length; i++) {
