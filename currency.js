@@ -45,22 +45,30 @@ function setEntry(array) {
     if (array[i] === "AUD") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${array[i]}: ${Currencies.AUD}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.AUD.toFixed(
+        2
+      )}</span>`;
       exchangeBoard.appendChild(newLi);
     } else if (array[i] === "CAD") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${array[i]}: ${Currencies.CAD}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.CAD.toFixed(
+        2
+      )}</span>`;
       exchangeBoard.appendChild(newLi);
     } else if (array[i] === "EUR") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${array[i]}: ${Currencies.EUR}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.EUR.toFixed(
+        2
+      )}</span>`;
       exchangeBoard.appendChild(newLi);
     } else if (array[i] === "GBP") {
       const newLi = document.createElement("li");
       newLi.setAttribute("id", array[i]);
-      newLi.innerHTML = `<span>${array[i]}: ${Currencies.GBP}</span>`;
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.GBP.toFixed(
+        2
+      )}</span>`;
       exchangeBoard.appendChild(newLi);
     }
   }
@@ -80,7 +88,9 @@ conversionBtn.addEventListener("click", function (event) {
   let resultsList = document.getElementById("resultsList");
   //need to clear out the previously psoted conversions
   let objCurrToArr = Object.values(Currencies);
-  let objCurrToArrMapped = objCurrToArr.map((x) => x * dollarValue);
+  let objCurrToArrMapped = objCurrToArr.map((x) =>
+    (x * dollarValue).toFixed(2)
+  );
 
   //this clears the previous conversions so no duplication
   resultsList.innerHTML = "";
