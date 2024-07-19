@@ -74,8 +74,6 @@ const conversionBtn = document.getElementById("conversionBtn");
 conversionBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
-  console.log("clicked");
-
   //this captures the user provided amount in dollars to be converted
   let dollarValue = document.getElementById("dollarValue").value;
   //this selects the ul that will display the converted currency amounts
@@ -84,9 +82,12 @@ conversionBtn.addEventListener("click", function (event) {
   let objCurrToArr = Object.values(Currencies);
   let objCurrToArrMapped = objCurrToArr.map((x) => x * dollarValue);
 
-  // console.log(dollarValue);
   //this clears the previous conversions so no duplication
   resultsList.innerHTML = "";
+
+  let convHeading = document.getElementById("results").firstElementChild;
+
+  convHeading.textContent = `$${dollarValue} Dollars in Foreign Currency`;
 
   function setResults(array1, array2) {
     for (i = 0; i < array1.length; i++) {
