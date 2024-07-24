@@ -3,9 +3,8 @@ const url = `https://open.er-api.com/v6/latest/USD`;
 //create an object that you can add exchange rates to, once the data is fetched
 const Currencies = {};
 
-//i'm only interested in these currencies for now
-let countries = ["ARS", "AUD", "BRL", "CAD", "EUR", "GBP"];
-
+//so this is one difference
+let countries = [];
 //this selects the element where the currencies will be displayed
 let exchangeBoard = document.getElementById("exchangeBoard");
 
@@ -21,17 +20,25 @@ async function getData() {
     //returns data as a json object
     const currencies = await response.json();
 
+    // //selects out the exchange rates from the json object, so this is good currency key: exchange rate
+    let allCountriesObj = currencies.rates;
+
+    // //coverts the previous object to an array so I can select out the exchange rate by the country code
+    let allCountriesArr = Object.keys(allCountriesObj);
+
+    // //this makes the allCountriesArr array the countries array - this is not necessary
+    allCountriesArr.forEach((element) => countries.push(element));
+
     Currencies.ARS = currencies.rates.ARS;
     Currencies.AUD = currencies.rates.AUD;
     Currencies.BRL = currencies.rates.BRL;
     Currencies.CAD = currencies.rates.CAD;
     Currencies.EUR = currencies.rates.EUR;
     Currencies.GBP = currencies.rates.GBP;
+    Currencies.ZAR = currencies.rates.ZAR;
     // Currencies.lastUpdate = currencies.time_last_update_unix;
     // Currencies.nextUpdate = currencies.time_next_update_unix;
 
-    console.log(currencies);
-    console.log(Currencies);
     setEntry(countries);
   } catch (error) {
     console.error(error.message);
@@ -95,6 +102,13 @@ function setEntry(array) {
         2
       )}</span>`;
       exchangeBoard.appendChild(newLi);
+    } else if (array[i] === "ZAR") {
+      const newLi = document.createElement("li");
+      newLi.setAttribute("id", array[i]);
+      newLi.innerHTML = `<span>${array[i]}: ${Currencies.ZAR.toFixed(
+        2
+      )}</span>`;
+      exchangeBoard.appendChild(newLi);
     }
   }
 }
@@ -106,54 +120,57 @@ const conversionBtn = document.getElementById("conversionBtn");
 //adding on click event listener
 conversionBtn.addEventListener("click", function (event) {
   event.preventDefault();
-
   //this captures the user provided amount in dollars to be converted
+  //dollar value is working
   let dollarValue = document.getElementById("dollarValue").value;
+
   //this selects the ul that will display the converted currency amounts
   let resultsList = document.getElementById("resultsList");
-  //need to clear out the previously psoted conversions
+  //need to clear out the previously posted conversions
   let objCurrToArr = Object.values(Currencies);
+
+  //does a mapped array return? how to pass in an object into a function
   let objCurrToArrMapped = objCurrToArr.map((x) =>
-    (x * dollarValue).toFixed(2)
+    Number((x * dollarValue).toFixed(2))
   );
 
   //this clears the previous conversions so no duplication
   resultsList.innerHTML = "";
 
   let convHeading = document.getElementById("results").firstElementChild;
-
+  //ok so I need to fix objCurrToArrMapped
   convHeading.textContent = `$${dollarValue} Dollars in Foreign Currency`;
-
+  //so pass in the objCurrToArrMapped to the function
   function setResults(array1, array2) {
     for (i = 0; i < array1.length; i++) {
       if (array1[i] === "ARS") {
         const newConLi = document.createElement("li");
-        // newLi.setAttribute("id", array[i]);
+        // newConLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]} </span>`;
         resultsList.appendChild(newConLi);
       } else if (array1[i] === "AUD") {
         const newConLi = document.createElement("li");
-        // newLi.setAttribute("id", array[i]);
+        // newConLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       } else if (array1[i] === "BRL") {
         const newConLi = document.createElement("li");
-        // newLi.setAttribute("id", array[i]);
+        // newConLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       } else if (array1[i] === "CAD") {
         const newConLi = document.createElement("li");
-        // newLi.setAttribute("id", array[i]);
+        // newConLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       } else if (array1[i] === "EUR") {
         const newConLi = document.createElement("li");
-        // newLi.setAttribute("id", array[i]);
+        // newConLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       } else if (array1[i] === "GBP") {
         const newConLi = document.createElement("li");
-        // newLi.setAttribute("id", array[i]);
+        // newConLi.setAttribute("id", array[i]);
         newConLi.innerHTML = `<span>${array1[i]}: ${array2[i]}</span>`;
         resultsList.appendChild(newConLi);
       }
