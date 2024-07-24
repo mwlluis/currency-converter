@@ -1,3 +1,6 @@
+// //i need to add a dropdown for the user to select countries to calculate, so I need to display the whole array as a dropdown,
+// the save user selection as the countries array via a push
+
 //fetch from this url - no key required
 const url = `https://open.er-api.com/v6/latest/USD`;
 //create an object that you can add exchange rates to, once the data is fetched
@@ -27,11 +30,11 @@ async function getData() {
     Currencies.CAD = currencies.rates.CAD;
     Currencies.EUR = currencies.rates.EUR;
     Currencies.GBP = currencies.rates.GBP;
-    // Currencies.lastUpdate = currencies.time_last_update_unix;
-    // Currencies.nextUpdate = currencies.time_next_update_unix;
+    Currencies.lastUpdate = currencies.time_last_update_unix;
+    Currencies.nextUpdate = currencies.time_next_update_unix;
 
     // console.log(currencies);
-    // console.log(Currencies);
+    console.log(Currencies);
     setEntry(countries);
   } catch (error) {
     console.error(error.message);
