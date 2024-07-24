@@ -30,15 +30,13 @@ async function getData() {
     // Currencies.lastUpdate = currencies.time_last_update_unix;
     // Currencies.nextUpdate = currencies.time_next_update_unix;
 
-    console.log(currencies);
-    console.log(Currencies);
+    // console.log(currencies);
+    // console.log(Currencies);
     setEntry(countries);
   } catch (error) {
     console.error(error.message);
   }
 }
-
-// console.log(Currencies);
 
 getData();
 
