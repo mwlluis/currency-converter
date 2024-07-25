@@ -4,6 +4,7 @@ const url = `https://open.er-api.com/v6/latest/USD`;
 const Currencies = {};
 let countries = [];
 let countryCurrencyValues = [];
+let timeUpdates = [];
 
 let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 let months = [
@@ -47,31 +48,51 @@ async function getData() {
       countryCurrencyValues.push(element)
     );
 
+    //This section is to set the time stamps for the currency exchange rates
+
     Currencies.lastUpdate = currencies.time_last_update_unix;
     Currencies.nextUpdate = currencies.time_next_update_unix;
 
     Currencies.lastUpdateUtc = currencies.time_last_update_utc;
     Currencies.nextUpdateUtc = currencies.time_next_update_utc;
-    // console.log(Currencies);
 
-    var lastUpdate = Currencies.lastUpdateUtc;
-    var nextUpdate = Currencies.nextUpdateUTC;
-    // console.log(lastUpdate);
-    var timeStampMilli = Date.parse(lastUpdate);
+    var timeStampMillisecsLast = Date.parse(Currencies.lastUpdateUtc);
+    timeUpdates.push(timeStampMillisecsLast);
+    var timeStampMillisecsNext = Date.parse(Currencies.nextUpdateUtc);
+    timeUpdates.push(timeStampMillisecsNext);
 
-    console.log(timeStampMilli);
-    var lastUpdateLocalDay = days[new Date(timeStampMilli).getDay()];
-    var lastUpdateLocalMonth = months[new Date(timeStampMilli).getMonth()];
-    var lastUpdateLocalDate = new Date(timeStampMilli).getDate();
-    var lastUpdateLocalYear = new Date(timeStampMilli).getFullYear();
-    var lastUpdateLocalTime = new Date(timeStampMilli).toLocaleTimeString();
+    var lastUpdateLocalDay = days[new Date(timeStampMillisecsLast).getDay()];
+    var lastUpdateLocalMonth =
+      months[new Date(timeStampMillisecsLast).getMonth()];
+    var lastUpdateLocalDate = new Date(timeStampMillisecsLast).getDate();
+    var lastUpdateLocalYear = new Date(timeStampMillisecsLast).getFullYear();
+    var lastUpdateLocalTime = new Date(
+      timeStampMillisecsLast
+    ).toLocaleTimeString();
 
-    timeStamp.innerHTML = `<p>Last Update: ${lastUpdateLocalDay} ${lastUpdateLocalMonth} ${lastUpdateLocalDate} ${lastUpdateLocalYear} ${lastUpdateLocalTime} Local Time</p>`;
-    console.log(lastUpdateLocalDay);
-    console.log(lastUpdateLocalMonth);
-    console.log(lastUpdateLocalDate);
-    console.log(lastUpdateLocalYear);
-    console.log(lastUpdateLocalTime);
+    var nextUpdateLocalDay = days[new Date(timeStampMillisecsNext).getDay()];
+    var nextUpdateLocalMonth =
+      months[new Date(timeStampMillisecsNext).getMonth()];
+    var nextUpdateLocalDate = new Date(timeStampMillisecsNext).getDate();
+    var nextUpdateLocalYear = new Date(timeStampMillisecsNext).getFullYear();
+    var nextUpdateLocalTime = new Date(
+      timeStampMillisecsNext
+    ).toLocaleTimeString();
+
+    for (i = 0; i < timeUpdates.length; i++) {
+      if (timeUpdates[i] === timeStampMillisecsLast) {
+        const newPara = document.createElement("p");
+        newPara.setAttribute("id", "lastUpdate");
+        newPara.innerText = `Last Update: ${lastUpdateLocalDay} ${lastUpdateLocalMonth} ${lastUpdateLocalDate} ${lastUpdateLocalYear} ${lastUpdateLocalTime} Local Time`;
+        timeStamp.appendChild(newPara);
+      }
+    }
+
+    // console.log(lastUpdateLocalDay);
+    // console.log(lastUpdateLocalMonth);
+    // console.log(lastUpdateLocalDate);
+    // console.log(lastUpdateLocalYear);
+    // console.log(lastUpdateLocalTime);
     setEntry(countries, allCountriesArrValues);
   } catch (error) {
     console.error(error.message);
