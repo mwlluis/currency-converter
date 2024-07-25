@@ -36,7 +36,20 @@ async function getData() {
 
     Currencies.lastUpdateUtc = currencies.time_last_update_utc;
     Currencies.nextUpdateUtc = currencies.time_next_update_utc;
+    console.log(Currencies);
 
+    var lastUpdate = Currencies.lastUpdateUtc;
+    console.log(lastUpdate);
+    var timeStampMilli = Date.parse(lastUpdate);
+
+    console.log(timeStampMilli);
+    var lastUpdateLocalDay = new Date(timeStampMilli).getDay();
+    var lastUpdateLocalMonth = new Date(timeStampMilli).getMonth();
+    var lastUpdateLocalDate = new Date(timeStampMilli).getDate();
+    var lastUpdateLocalTime = new Date(timeStampMilli).toLocaleTimeString();
+
+    console.log(lastUpdateLocalDay);
+    console.log(lastUpdateLocalMonth);
     setEntry(countries, allCountriesArrValues);
   } catch (error) {
     console.error(error.message);
