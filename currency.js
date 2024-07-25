@@ -2,12 +2,28 @@
 const url = `https://open.er-api.com/v6/latest/USD`;
 //create an object that you can add exchange rates to, once the data is fetched
 const Currencies = {};
-
 let countries = [];
 let countryCurrencyValues = [];
+
+let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+let months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 //this selects the element where the currencies will be displayed
 let exchangeBoard = document.getElementById("exchangeBoard");
-
+let timeStamp = document.getElementById("updates");
 //fetch json data
 async function getData() {
   try {
@@ -36,20 +52,26 @@ async function getData() {
 
     Currencies.lastUpdateUtc = currencies.time_last_update_utc;
     Currencies.nextUpdateUtc = currencies.time_next_update_utc;
-    console.log(Currencies);
+    // console.log(Currencies);
 
     var lastUpdate = Currencies.lastUpdateUtc;
-    console.log(lastUpdate);
+    var nextUpdate = Currencies.nextUpdateUTC;
+    // console.log(lastUpdate);
     var timeStampMilli = Date.parse(lastUpdate);
 
     console.log(timeStampMilli);
-    var lastUpdateLocalDay = new Date(timeStampMilli).getDay();
-    var lastUpdateLocalMonth = new Date(timeStampMilli).getMonth();
+    var lastUpdateLocalDay = days[new Date(timeStampMilli).getDay()];
+    var lastUpdateLocalMonth = months[new Date(timeStampMilli).getMonth()];
     var lastUpdateLocalDate = new Date(timeStampMilli).getDate();
+    var lastUpdateLocalYear = new Date(timeStampMilli).getFullYear();
     var lastUpdateLocalTime = new Date(timeStampMilli).toLocaleTimeString();
 
+    timeStamp.innerHTML = `<p>Last Update: ${lastUpdateLocalDay} ${lastUpdateLocalMonth} ${lastUpdateLocalDate} ${lastUpdateLocalYear} ${lastUpdateLocalTime} Local Time</p>`;
     console.log(lastUpdateLocalDay);
     console.log(lastUpdateLocalMonth);
+    console.log(lastUpdateLocalDate);
+    console.log(lastUpdateLocalYear);
+    console.log(lastUpdateLocalTime);
     setEntry(countries, allCountriesArrValues);
   } catch (error) {
     console.error(error.message);
