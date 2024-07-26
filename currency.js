@@ -86,13 +86,14 @@ async function getData() {
         newPara.innerText = `Last Update: ${lastUpdateLocalDay} ${lastUpdateLocalMonth} ${lastUpdateLocalDate} ${lastUpdateLocalYear} ${lastUpdateLocalTime} Local Time`;
         timeStamp.appendChild(newPara);
       }
+      if (timeUpdates[i] === timeStampMillisecsNext) {
+        const newPara = document.createElement("p");
+        newPara.setAttribute("id", "nextUpdate");
+        newPara.innerText = `Next Update: ${nextUpdateLocalDay} ${nextUpdateLocalMonth} ${nextUpdateLocalDate} ${nextUpdateLocalYear} ${nextUpdateLocalTime} Local Time`;
+        timeStamp.appendChild(newPara);
+      }
     }
 
-    // console.log(lastUpdateLocalDay);
-    // console.log(lastUpdateLocalMonth);
-    // console.log(lastUpdateLocalDate);
-    // console.log(lastUpdateLocalYear);
-    // console.log(lastUpdateLocalTime);
     setEntry(countries, allCountriesArrValues);
   } catch (error) {
     console.error(error.message);
