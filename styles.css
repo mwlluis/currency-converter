@@ -1,0 +1,5 @@
+/* this sets up the error message as hidden */
+
+.hide {
+  visibility: hidden;
+}
