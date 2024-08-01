@@ -169,8 +169,13 @@ conversionBtn.addEventListener("click", function (event) {
   // console.log(testArray);
 
   for (j = 0; j < testArray.length; j++) {
+    let decCounter = 0;
     if (testArray[j] >= "0" && testArray[j] <= "9") {
       console.log(testArray[j]);
+    }
+    if (testArray[j] === ".") {
+      console.log("decimal");
+      console.log(decCounter);
     }
   }
   //this selects the ul that will display the converted currency amounts
