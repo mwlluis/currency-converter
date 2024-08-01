@@ -160,7 +160,13 @@ conversionBtn.addEventListener("click", function (event) {
   //this captures the user provided amount in dollars to be converted
   //dollar value is working
   let dollarValue = document.getElementById("dollarValue").value;
+  let testArray = dollarValue.split("");
+  //test arry is split up, now I need to test condition
+  // console.log(testArray);
 
+  for (j = 0; j < testArray.length; j++) {
+    console.log(testArray[j]);
+  }
   //this selects the ul that will display the converted currency amounts
   let resultsList = document.getElementById("resultsList");
   //need to clear out the previously posted conversions
